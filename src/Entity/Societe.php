@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SocieteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -79,6 +81,16 @@ class Societe implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=35)
      */
     private $phone_contact;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Offres::class, mappedBy="societe", orphanRemoval=true)
+     */
+    private $offres;
+
+    public function __construct()
+    {
+        $this->offres = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -273,6 +285,36 @@ class Societe implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoneContact(string $phone_contact): self
     {
         $this->phone_contact = $phone_contact;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Offres>
+     */
+    public function getOffres(): Collection
+    {
+        return $this->offres;
+    }
+
+    public function addOffre(Offres $offre): self
+    {
+        if (!$this->offres->contains($offre)) {
+            $this->offres[] = $offre;
+            $offre->setSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffre(Offres $offre): self
+    {
+        if ($this->offres->removeElement($offre)) {
+            // set the owning side to null (unless already changed)
+            if ($offre->getSociete() === $this) {
+                $offre->setSociete(null);
+            }
+        }
 
         return $this;
     }

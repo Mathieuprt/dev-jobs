@@ -47,6 +47,12 @@ class Candidat
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Offres::class, inversedBy="candidat")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $offre;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +126,18 @@ class Candidat
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getOffre(): ?Offres
+    {
+        return $this->offre;
+    }
+
+    public function setOffre(?Offres $offre): self
+    {
+        $this->offre = $offre;
 
         return $this;
     }

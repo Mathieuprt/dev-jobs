@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OffresRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +63,22 @@ class Offres
      * @ORM\Column(type="datetime_immutable")
      */
     private $created_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Societe::class, inversedBy="offres")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $societe;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Candidat::class, mappedBy="offre", orphanRemoval=true)
+     */
+    private $candidat;
+
+    public function __construct()
+    {
+        $this->candidat = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -171,6 +189,48 @@ class Offres
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getSociete(): ?Societe
+    {
+        return $this->societe;
+    }
+
+    public function setSociete(?Societe $societe): self
+    {
+        $this->societe = $societe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Candidat>
+     */
+    public function getCandidat(): Collection
+    {
+        return $this->candidat;
+    }
+
+    public function addCandidat(Candidat $candidat): self
+    {
+        if (!$this->candidat->contains($candidat)) {
+            $this->candidat[] = $candidat;
+            $candidat->setOffre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCandidat(Candidat $candidat): self
+    {
+        if ($this->candidat->removeElement($candidat)) {
+            // set the owning side to null (unless already changed)
+            if ($candidat->getOffre() === $this) {
+                $candidat->setOffre(null);
+            }
+        }
 
         return $this;
     }
