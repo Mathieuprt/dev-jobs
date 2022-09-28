@@ -1,0 +1,15 @@
+@mixin mediaquery($media){
+  @media screen and (min-width: $media) {
+    @content;
+  }
+}
+
+$xsmall : 620px;
+
+$small : 768px;
+
+$medium: 992px;
+
+$large: 1200px;
+
+$xlarge: 1400px;

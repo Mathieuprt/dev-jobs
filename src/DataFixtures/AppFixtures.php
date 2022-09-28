@@ -8,6 +8,8 @@ use App\Entity\Societe;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Monolog\DateTimeImmutable;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -39,7 +41,7 @@ class AppFixtures extends Fixture
         $table = [];
         foreach ($this->getDirectoryContent('public/upload') as $file)
         {
-            $fileInfos = new SplFileInfo($file);
+            $fileInfos = new \SplFileInfo($file);
             $fileName = $fileInfos->getBasename();
             $table[] = $fileName;
         }
@@ -98,13 +100,13 @@ class AppFixtures extends Fixture
             $o = array("CDI", "CDD", 'Alternance', "Stage");
             $comp = array("Autonomie", "Rigueur", 'Organisé', "Communication");
 
-            for ($i = 0; $i < 32; $i++){
+            for ($i = 0; $i < 20; $i++){
                 $offre = new Offres();
                 $offre
                     ->setTitle($faker->jobTitle)
                     ->setContratType($o[array_rand($o)])
                     ->setDescription($faker->realText())
-                    ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 years', 'now')))
+                    ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-2 years', 'now')))
                     ->setProfilDesc($faker->realText())
                     ->setProfilComp($comp[array_rand($comp)])
                     ->setPosteDesc($faker->realText())
@@ -122,7 +124,7 @@ class AppFixtures extends Fixture
 
             $candidats = [];
 
-            for ($c = 0; $c < 70; $c++){
+            for ($c = 0; $c < 30; $c++){
                 $candidat = new Candidat();
 
                 $candidat
@@ -132,14 +134,14 @@ class AppFixtures extends Fixture
                     ->setEmail($faker->email)
                     ->setCandidatCv('cv-candidat-perrot.pdf')
                     ->setOffre($offres[random_int(0, count($offres) -1)])
-                    ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 years', 'now')));
+                    ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-2 years', 'now')));
 
                 $candidats[] = $candidat;
                 $manager->persist($candidat);
 
 
             }
-            
+
         $manager->flush();
     }
 }

@@ -1,0 +1,86 @@
+.button{
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+
+  font-size: 1.8rem;
+  font-family: 'Raleway', serif;
+
+  position: relative;
+  overflow: hidden;
+
+  cursor: pointer;
+
+  &.button--primary{
+    color: var(--white);
+    border: 1px solid var(--red);
+    z-index: 1;
+    &::before{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--red);
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      z-index: -2;
+    }
+    &::after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: var(--white);
+      z-index: -1;
+      transition: all .3s;
+    }
+
+    &:hover{
+      color: var(--red);
+      &::after{
+        width: 100%;
+      }
+    }
+  }
+
+  &.button--secondary{
+    color: var(--red);
+    border: 1px solid var(--red);
+    z-index: 1;
+    &::before{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--white);
+      -webkit-transition: all .3s;
+      transition: all .3s;
+      z-index: -2;
+    }
+    &::after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: var(--red);
+      z-index: -1;
+      transition: all .3s;
+    }
+
+    &:hover{
+      color: var(--white);
+      &::after{
+        width: 100%;
+      }
+    }
+  }
+}

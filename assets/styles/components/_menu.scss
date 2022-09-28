@@ -1,0 +1,110 @@
+.main-nav{
+  .toggle-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    padding: .6rem;
+    z-index: 100;
+    border: none;
+    background: none;
+    @include mediaquery($small){
+      display: none;
+    }
+    .bar{
+      position: relative;
+      width: 2.3rem;
+      height: .4rem;
+      background-color: var(--black);
+      display: inline-block;
+      transition: .4s all ease-in-out;
+      &.second-bar{
+        margin: .4rem 0;
+      }
+    }
+    &.active{
+      .second-bar{
+        background-color: transparent;
+      }
+      .first-bar{
+        transform: rotate(135deg);
+        top: 10px;
+      }
+      .third-bar{
+        transform: rotate(-135deg);
+        bottom: 6px;
+      }
+
+    }
+  }
+
+  .main-menu{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background: var(--bgcolor);
+    padding: 3rem;
+    position: absolute;
+    right: 0;
+    top: -1500px;
+    z-index: 95;
+    transition: top .5s cubic-bezier(1, 0, 0, 1);
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0 ,0.93);
+    width: 100%;
+    height: 45%;
+
+    @include mediaquery($small){
+      position: static;
+      margin-left: 3rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background: none;
+      padding: 0;
+      box-shadow: none;
+    }
+    .menu-item{
+      transition: all .4s ease-in-out;
+      &:hover{
+        transform: scale(0.98);
+      }
+      @media screen and (min-width: 992px) {
+        margin: 0 1rem;
+      }
+      a{
+        position: relative;
+        display: inline-block;
+        transition: all .1s ease-in-out;
+        background: transparent;
+        text-decoration: none;
+
+        @include mediaquery($small){
+          font-size: 1.8rem;
+        }
+
+      }
+
+      &:not(:last-child){
+        margin-bottom: 2.2rem;
+
+        @include mediaquery($small){
+          margin-bottom: 0;
+          margin-right: 2.2rem;
+        }
+      }
+    }
+    &.opened{
+      top: 0;
+      padding-top: 8rem;
+    }
+  }
+
+  .button{
+    font-size: 1.6rem;
+  @include mediaquery($small){
+    font-size: 1.8rem;
+  }
+  }
+}

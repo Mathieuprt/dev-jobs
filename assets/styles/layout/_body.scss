@@ -1,0 +1,17 @@
+
+body{
+  background-color: var(--bgcolor);
+}
+
+.container{
+  width: 90%;
+  max-width: 1200px;
+  margin:  0 auto;
+
+  &.container__large{
+    max-width: 1710px;
+  }
+}
+
+
+

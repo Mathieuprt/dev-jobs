@@ -1,0 +1,12 @@
+.banner{
+  padding: 13rem 0;
+
+  position: relative;
+
+  &.banner--offer{
+    background-image: url('/public/build/images/offer-banner.ced6c718.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}
