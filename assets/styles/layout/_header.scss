@@ -10,6 +10,10 @@
       max-width: 12.7rem;
       position: relative;
       z-index: 96;
+
+    @include mediaquery($medium){
+      max-width: 15rem;
+    }
       img{
         width: 100%;
         height: 100%;

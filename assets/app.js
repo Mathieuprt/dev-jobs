@@ -11,6 +11,7 @@ import './styles/app.scss';
 // import JS
 
 import './js/menu';
+import './js/search';
 
 // start the Stimulus application
 // import './bootstrap';

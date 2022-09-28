@@ -1,0 +1,38 @@
+.searchbar__section .container{
+  padding: 5rem 0;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  @include mediaquery($small){
+    padding: 8rem 0;
+  }
+
+
+  input{
+    padding: 1.7rem ;
+    background-color: var(--gray);
+    border: 0;
+    width: 100%;
+    max-width: 36rem;
+
+    border-radius: 5px;
+
+    font-size: 1.6rem;
+    @include mediaquery($small){
+      font-size: 1.8rem;
+    }
+
+
+    &::placeholder{
+      color: var(--black);
+      font-size: 1.6rem;
+      font-style: italic;
+
+      @include mediaquery($small){
+        font-size: 1.8rem;
+      }
+    }
+  }
+}

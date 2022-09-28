@@ -1,14 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Les offres{% endblock %}
-
 {% block body %}
-    <section class="banner banner--offer">
+    <section class="banner banner__offer">
         <div class="container">
-            <h1 class="heading heading--1--white">Nos offres d'emploi</h1>
+            <h1 class="heading heading--1 heading--1__white">Nos offres d'emploi</h1>
         </div>
     </section>
-<div class="container">
-    <p>Index offres</p>
-</div>
+
+    <section class="searchbar__section">
+        <div class="container">
+            <input id="searchbar_offers" type="text"
+                   name="search" placeholder="Votre recherche"/>
+        </div>
+    </section>
+
+    <section class="page__content">
+
+        <div class="container">
+
+            <h2 class="heading heading--h2 screen-reader-text">Page des offres d'emploi</h2>
+
+            <p>Retrouvez ici toutes nos offres d'emploi : CDI, CDD, Stage, Alternance</p>
+
+            <div class="page__content--grid">
+                {% for offre in offres %}
+                <article class="grid__item grid__item--offres">
+                    <picture class="grid__item--logo">
+                        <img src="{{asset('/upload/' ~ offre.societe.logo)}}" alt="Logo de l'entreprise"
+                             style="background-color: {{ offre.societe.backgroundlogo }}">
+                    </picture>
+                    <div class="grid--item__content">
+                        <h3 class="heading heading--h4">{{ offre.title }}</h3>
+                        <p class="grid--item__content__p">{{ offre.societe.name }}</p>
+                        <p class="grid--item__content__p">{{ offre.createdat|date('d-m-Y H:i:s')| slice(0, 10) }}</p>
+                        <div class="dual_text">
+                            <p class="grid--item__content__p">{{ offre.contrattype }}</p>
+                            <p class="grid--item__content__p">{{ offre.societe.city }}</p>
+                        </div>
+                        <div class="grid--item__content__button">
+                            <a href="" class="button button--primary">Voir l'annonce</a>
+                        </div>
+                    </div>
+                </article>
+
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </section>
 {% endblock %}
