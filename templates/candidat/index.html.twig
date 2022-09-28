@@ -1,20 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CandidatController!{% endblock %}
-
+{% block title %}Les candidats{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section class="banner banner__candidat">
+        <div class="container">
+            <h1 class="heading heading--1 heading--1__white">Nos candidats</h1>
+        </div>
+    </section>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <section class="searchbar__section">
+        <div class="container">
+            <input id="searchbar_offers" type="text"
+                   name="search" placeholder="Votre recherche"/>
+        </div>
+    </section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/dev-jobs-v1/src/Controller/CandidatController.php'|file_link(0) }}">src/Controller/CandidatController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/dev-jobs-v1/templates/candidat/index.html.twig'|file_link(0) }}">templates/candidat/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <section class="page__content">
+
+        <div class="container">
+
+            <h2 class="heading heading--h2 screen-reader-text">Page des candidats</h2>
+
+            <p>Retrouvez la liste des candidats ayant postulé à une offre d'emploi</p>
+
+            <div class="page__content--grid">
+                {% for candidat in candidats %}
+                    <article class="grid__item grid__item--societes">
+                        <picture class="grid__item--logo">
+                            <img src="{{asset('/upload/' ~ candidat.offre.societe.logo)}}" alt="Logo de l'entreprise"
+                                 style="background-color: {{ candidat.offre.societe.backgroundlogo }}">
+                        </picture>
+                        <div class="grid--item__content">
+                            <h3 class="heading heading--h4">{{ candidat.firstname }} {{ candidat.lastname }}</h3>
+                            <p class="grid--item__content__p">{{ candidat.email }}</p>
+                            <p class="grid--item__content__p">{{ candidat.phone }}</p>
+                            <p class="grid--item__content__p">{{ candidat.candidatcv}}</p>
+
+                            <div class="grid--item__content__button">
+                                <a href="" class="button button--primary">Voir le candidat</a>
+                            </div>
+                        </div>
+                    </article>
+
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </section>
 {% endblock %}

@@ -3,21 +3,32 @@
   position: relative;
 
   @include mediaquery($medium){
-    padding: 16rem 0;
+    padding: 18rem 0;
+  }
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  h1{
+    background-color: rgba(34,34,34, 0.6);
+    display: inline;
+
+    position: relative;
+    z-index: 2;
   }
 
   &.banner__offer{
     background-image: url('/public/build/images/offer-banner.ced6c718.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
 
-    h1{
-      background-color: rgba(34,34,34, 0.6);
-      display: inline;
+  }
 
-      position: relative;
-      z-index: 2;
-    }
+  &.banner__societe{
+    background-image: url('/public/build/images/society-banner.5cd35516.jpg');
+  }
+
+  &.banner__candidat{
+    background-image: url('/public/build/images/candidat-banner.cbfce336.jpg');
+
   }
 }

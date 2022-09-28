@@ -20,6 +20,7 @@ a{
   font-size: 1.6rem;
   color: var(--black);
   font-weight: 400;
+  text-decoration: none;
 
   @include mediaquery($small){
     font-size: 1.8rem;

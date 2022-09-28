@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/societe", name="societe_")
+ * @Route("/societes", name="societe_")
  */
 
 class SocieteController extends AbstractController
@@ -29,7 +29,7 @@ class SocieteController extends AbstractController
 
 
     /**
-     * @Route("/créer", name="add", methods={"GET", "POST"})
+     * @Route("/creer", name="add", methods={"GET", "POST"})
      */
 
     public function add(Request $request, SocieteRepository $societeRepository): Response

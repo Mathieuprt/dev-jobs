@@ -1,20 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SocieteController!{% endblock %}
-
+{% block title %}Les sociétés{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section class="banner banner__societe">
+        <div class="container">
+            <h1 class="heading heading--1 heading--1__white">Nos societés</h1>
+        </div>
+    </section>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <section class="searchbar__section">
+        <div class="container">
+            <input id="searchbar_offers" type="text"
+                   name="search" placeholder="Votre recherche"/>
+        </div>
+    </section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/dev-jobs-v1/src/Controller/SocieteController.php'|file_link(0) }}">src/Controller/SocieteController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/dev-jobs-v1/templates/societe/index.html.twig'|file_link(0) }}">templates/societe/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <section class="page__content">
+
+        <div class="container">
+
+            <h2 class="heading heading--h2 screen-reader-text">Page des sociétés</h2>
+
+            <p>Retrouvez ici toutes les sociétés inscrites</p>
+
+            <div class="page__content--grid">
+                {% for societe in societes %}
+                    <article class="grid__item grid__item--societes">
+                        <picture class="grid__item--logo">
+                            <img src="{{asset('/upload/' ~ societe.logo)}}" alt="Logo de l'entreprise"
+                                 style="background-color: {{ societe.backgroundlogo }}">
+                        </picture>
+                        <div class="grid--item__content">
+                            <h3 class="heading heading--h4">{{ societe.name }}</h3>
+                            <p class="grid--item__content__p">{{ societe.city }}</p>
+                            <p class="grid--item__content__p">{{ societe.website }}</p>
+                            <p class="grid--item__content__p">{{ societe.email }}</p>
+
+                            <div class="grid--item__content__button">
+                                <a href="" class="button button--primary">Voir la société</a>
+                            </div>
+                        </div>
+                    </article>
+
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </section>
 {% endblock %}
