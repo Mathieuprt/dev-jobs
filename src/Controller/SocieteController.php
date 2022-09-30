@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Offres;
 use App\Entity\Societe;
 use App\Form\SocieteType;
 use App\Repository\SocieteRepository;
@@ -86,19 +87,20 @@ class SocieteController extends AbstractController
     {
         $societeRepository->remove($societe, true);
 
-        // add flash here
+        $this->addFlash('success', 'La société a été supprimé !');
 
         return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
-     * @Route("/{societe}/show", name="show", methods={"GET", "POST"})
+     * @Route("/{societe}", name="show", methods={"GET", "POST"})
      */
 
-    public function show(Societe $societe): Response
+    public function show(Societe $societe, Offres $offres): Response
     {
         return $this->render('societe/show.html.twig', [
-            'societe' => $societe
+            'societe' => $societe,
+            'offre' => $offres
         ]);
     }
 
@@ -107,7 +109,7 @@ class SocieteController extends AbstractController
     // Les offres
 
     /**
-     * @Route("/{societe}/offres", name="offres", methods={"GET", "POST"})
+     * @Route("/{societe}/offre", name="offres", methods={"GET", "POST"})
      */
 
     public function societeOffres(Societe $societe): Response
@@ -116,6 +118,8 @@ class SocieteController extends AbstractController
             'societe' => $societe
         ]);
     }
+
+
 
 
     // Les candidats

@@ -51,13 +51,27 @@ class CandidatController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{candidat}/suppression", name="delete", methods={"GET", "POST"})
+     */
     public function delete(Candidat $candidat, CandidatRepository $candidatRepository): Response
     {
         $candidatRepository->remove($candidat, true);
 
-        // add flash here
+        $this->addFlash('success', 'Le candidat a été supprimé !');
 
         return $this->redirectToRoute('candidat_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    /**
+     * @Route("/{candidat}", name="_show", methods={"GET", "POST"}, requirements={"candidat": "\d+"})
+     */
+    public function show(Candidat $candidat): Response
+    {
+        return $this->render('candidat/show.html.twig', [
+            'candidat' => $candidat
+        ]);
     }
 
 }

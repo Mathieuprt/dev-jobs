@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/offres", name="offres_")
+ * @Route("/offres", name="offre_")
  */
 class OffreController extends AbstractController
 {
@@ -30,7 +30,7 @@ class OffreController extends AbstractController
     }
 
     /**
-     * @Route("/ajouter", name="_add", methods={"GET", "POST"})
+     * @Route("/ajouter", name="add", methods={"GET", "POST"})
      */
     public function add(Request $request, OffresRepository $offresRepository): Response
     {
@@ -53,7 +53,7 @@ class OffreController extends AbstractController
 
 
     /**
-     * @Route("/{offre}/modifier", name="_edit", methods={"GET", "POST"})
+     * @Route("/{offre}/modifier", name="edit", methods={"GET", "POST"})
      */
     public function edit(Offres $offres, Request $request, OffresRepository $offresRepository): Response
     {
@@ -74,22 +74,24 @@ class OffreController extends AbstractController
     }
 
     /**
-     * @Route("/{offre}/show", name="_show", methods={"GET", "POST"})
+     * @Route("/{offre}", name="show", methods={"GET", "POST"})
      */
-    public function show(Offres $offres): Response
+    public function show(Offres $offre): Response
     {
         return $this->render('offre/show.html.twig', [
-            'offres' =>$offres
+            'offre' => $offre
         ]);
     }
 
     /**
-     * @Route("/{offre}/suppression", name="delete", methods={"GET", "POST"})
+     * @Route("/{offres}/suppression", name="delete", methods={"GET", "POST"})
      */
 
     public function delete(Offres $offres, OffresRepository $offresRepository): Response
     {
         $offresRepository->remove($offres, true);
+
+        $this->addFlash('success', 'L\'offre a été supprimé !');
 
         return $this->redirectToRoute('offres_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -124,11 +126,11 @@ class OffreController extends AbstractController
     /**
      * @Route("/{offre}/{candidat}", name="candidat_show", methods={"GET", "POST"})
      */
-    public function showCandidat(Candidat $candidat, Offres $offre): Response
+    /*public function showCandidat(Candidat $candidat, Offres $offre): Response
     {
         return $this->render('candidat/show.html.twig', [
             'offre' => $offre,
             'candidat' => $candidat
         ]);
-    }
+    }*/
 }

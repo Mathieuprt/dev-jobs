@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ candidat.firstname }} {{ candidat.lastname }}{% endblock %}
+
+{% block body %}
+    <section class="banner banner__candidat">
+        <div class="container">
+            <h1 class="heading heading--1 heading--1__white">{{ candidat.firstname }} {{ candidat.lastname }}</h1>
+        </div>
+    </section>
+
+
+    <main>
+
+        <h2 class="heading heading--h2 screen-reader-text">Détails du candidat</h2>
+        <div class="container">
+            <section class="page__content--candidat">
+
+                <div class="candidat__infos">
+                    <span>Nom du candidat</span>
+                    <p>{{ candidat.lastname }}</p>
+                </div>
+
+                <div class="candidat__infos">
+                    <span>Prénom du candidat</span>
+                    <p>{{ candidat.firstname }}</p>
+                </div>
+
+                <div class="candidat__infos">
+                    <span>Téléphone du candidat</span>
+                    <p>{{ candidat.phone }}</p>
+                </div>
+                <div class="candidat__infos">
+                    <span>Email du candidat</span>
+                    <p>{{ candidat.email }}</p>
+                </div>
+                <div class="candidat__infos">
+                    <span>Pièce jointe</span>
+                    <p>{{ candidat.candidatcv}}</p>
+                </div>
+            </section>
+            <div class="societe__buttons">
+                <a href="{{ path('candidat_delete', {'candidat': candidat.id}) }}" class="button button--tertiary">Supprimer</a>
+                <a href="" class="button button--primary">Modifier</a>
+            </div>
+
+        </div>
+
+
+
+    </main>
+{% endblock %}

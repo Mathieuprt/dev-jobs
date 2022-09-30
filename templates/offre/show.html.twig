@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ offre.title }}{% endblock %}
+
+{% block body %}
+    <section class="banner banner__offer">
+        <div class="container">
+            <h1 class="heading heading--1 heading--1__white">{{ offre.title }}</h1>
+        </div>
+    </section>
+
+
+    <main>
+        <div class="container">
+            <picture class="societe__logo--offre">
+                <img src="{{asset('/upload/' ~ offre.societe.logo)}}" alt="Logo de l'entreprise"
+                     style="background-color: {{ offre.societe.backgroundlogo }}">
+            </picture>
+
+            <section class="page__content--offre">
+                <div class="offre__infos">
+
+                    <span>Intitulé du poste</span>
+                    <p>{{ offre.title }}</p>
+
+                    <span>Type de contrat</span>
+                    <p>{{ offre.contrattype }}</p>
+
+                    <span>Compétences du poste</span>
+                    <p>{{ offre.profilcomp }}</p>
+
+                    <span>Date de l'offre</span>
+                    <p>{{ offre.createdat|date('d-m-Y H:i:s')| slice(0, 10)  }}</p>
+
+                    <span>Nom de la société</span>
+                    <p>{{ offre.societe.name }}</p>
+
+                    <span>Site web de la société</span>
+                    <p>{{ offre.societe.website | slice(0, 21) }}</p>
+                </div>
+
+                <div class="societe__offres societe__offres--page-offre">
+                    <h2 class="heading heading--h2">Description de l'offre</h2>
+                    <div class="societe__offres societe__offres--desc">
+                        <span class="description_title">Description de l'offre</span>
+                        <p>{{ offre.description }}</p>
+                        <span class="description_title">Description du profil</span>
+                        <p>{{ offre.profildesc }}</p>
+                        <span class="description_title">Description du poste</span>
+                        <p>{{ offre.postedesc }}</p>
+                        <span class="description_title">Mission du poste</span>
+                        <p>{{ offre.postemission }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="societe__buttons--offre">
+                <div class="delete_button">
+                    <a href="{{ path('offre_delete', {'offres': offre.id}) }}" class="button
+                    button--tertiary">Supprimer</a>
+                </div>
+                <div class="societe__buttons">
+                    <a href="#" class="button button--secondary">Modifier</a>
+                    <a href="#" class="button button--primary">Postuler</a>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+{% endblock %}

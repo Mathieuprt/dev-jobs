@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ societe.name }}{% endblock %}
+
+{% block body %}
+    <section class="banner banner__societe">
+        <div class="container">
+            <h1 class="heading heading--1 heading--1__white">{{ societe.name }}</h1>
+        </div>
+    </section>
+
+    <main>
+        <div class="container">
+            <picture class="societe__logo--societe">
+                <img src="{{asset('/upload/' ~ societe.logo)}}" alt="Logo de l'entreprise" style="background-color: {{ societe.backgroundlogo }}">
+            </picture>
+
+            <section class="page__content--societe">
+                <div class="societe__infos">
+
+                    <span>Ville</span>
+                    <p>{{ societe.city }}</p>
+
+                    <span>Site web de la societé</span>
+                    <p>{{ societe.website | slice(0, 21) }}</p>
+
+                    <span>Nom du contact</span>
+                    <p>{{ societe.lastnamecontact }}</p>
+
+                    <span>Prénom du contact</span>
+                    <p>{{ societe.firstnamecontact }}</p>
+
+                    <span>Mail du contact</span>
+                    <p>{{ societe.email }}</p>
+
+                    <span>Téléphone du contact</span>
+                    <p>{{ societe.phonecontact }}</p>
+                </div>
+
+                <div class="societe__offres">
+                    <h2 class="heading heading--h2">Les offres</h2>
+                    <div class="societe__offres--grid">
+                        {% for offre in societe.offres %}
+
+                            <article class="grid__item grid__item--offres">
+                                <picture class="grid__item--logo">
+                                    <img src="{{asset('/upload/' ~ offre.societe.logo)}}" alt="Logo de l'entreprise"
+                                         style="background-color: {{ offre.societe.backgroundlogo }}">
+                                </picture>
+                                <div class="grid--item__content">
+                                    <h3 class="heading heading--h4">{{ offre.title }}</h3>
+                                    <p class="grid--item__content__p">{{ offre.societe.name }}</p>
+                                    <p class="grid--item__content__p">{{ offre.createdat|date('d-m-Y H:i:s')| slice(0, 10) }}</p>
+                                    <div class="dual_text">
+                                        <p class="grid--item__content__p">{{ offre.contrattype }}</p>
+                                        <p class="grid--item__content__p">{{ offre.societe.city }}</p>
+                                    </div>
+                                    <div class="grid--item__content__button">
+                                        <a href="{{ path('offre_show', {'offre': offre.id}) }}" class="button
+                                        button--primary">Voir l'annonce</a>
+                                    </div>
+                                </div>
+                            </article>
+
+                        {% endfor %}
+                    </div>
+
+
+
+                </div>
+            </section>
+            
+            <div class="societe__buttons">
+                <a href="{{ path('societe_delete', {'societe': societe.id}) }}" class="button
+                button--tertiary">Supprimer</a>
+                <a href="#" class="button button--secondary">Modifier</a>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

@@ -8,44 +8,47 @@
         </div>
     </section>
 
-    <section class="searchbar__section">
-        <div class="container">
-            <input id="searchbar_offers" type="text"
-                   name="search" placeholder="Votre recherche"/>
-        </div>
-    </section>
-
-    <section class="page__content">
-
-        <div class="container">
-
-            <h2 class="heading heading--h2 screen-reader-text">Page des candidats</h2>
-
-            <p>Retrouvez la liste des candidats ayant postulé à une offre d'emploi</p>
-
-            <div class="page__content--grid">
-                {% for candidat in candidats %}
-                    <article class="grid__item grid__item--societes">
-                        <picture class="grid__item--logo">
-                            <img src="{{asset('/upload/' ~ candidat.offre.societe.logo)}}" alt="Logo de l'entreprise"
-                                 style="background-color: {{ candidat.offre.societe.backgroundlogo }}">
-                        </picture>
-                        <div class="grid--item__content">
-                            <h3 class="heading heading--h4">{{ candidat.firstname }} {{ candidat.lastname }}</h3>
-                            <p class="grid--item__content__p">{{ candidat.email }}</p>
-                            <p class="grid--item__content__p">{{ candidat.phone }}</p>
-                            <p class="grid--item__content__p">{{ candidat.candidatcv}}</p>
-
-                            <div class="grid--item__content__button">
-                                <a href="" class="button button--primary">Voir le candidat</a>
-                            </div>
-                        </div>
-                    </article>
-
-                {% endfor %}
+    <main>
+        <section class="searchbar__section">
+            <div class="container">
+                <input id="searchbar_offers" type="text"
+                       name="search" placeholder="Votre recherche"/>
             </div>
-        </div>
+        </section>
+
+        <section class="page__content">
+
+            <div class="container">
+
+                <h2 class="heading heading--h2 screen-reader-text">Page des candidats</h2>
+
+                <p>Retrouvez la liste des candidats ayant postulé à une offre d'emploi</p>
+
+                <div class="page__content--grid">
+                    {% for candidat in candidats %}
+                        <article class="grid__item grid__item--societes">
+                            <picture class="grid__item--logo">
+                                <img src="{{asset('/upload/' ~ candidat.offre.societe.logo)}}" alt="Logo de l'entreprise"
+                                     style="background-color: {{ candidat.offre.societe.backgroundlogo }}">
+                            </picture>
+                            <div class="grid--item__content">
+                                <h3 class="heading heading--h4">{{ candidat.firstname }} {{ candidat.lastname }}</h3>
+                                <p class="grid--item__content__p">{{ candidat.email }}</p>
+                                <p class="grid--item__content__p">{{ candidat.phone }}</p>
+                                <p class="grid--item__content__p">{{ candidat.candidatcv}}</p>
+
+                                <div class="grid--item__content__button">
+                                    <a href="" class="button button--primary">Voir le candidat</a>
+                                </div>
+                            </div>
+                        </article>
+
+                    {% endfor %}
+                </div>
+            </div>
 
 
-    </section>
+        </section>
+    </main>
+
 {% endblock %}
