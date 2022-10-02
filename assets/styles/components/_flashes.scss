@@ -1,0 +1,11 @@
+.alert{
+  position: relative;
+  width: 100%;
+  padding: 1.5rem 1rem;
+  &.alert-success{
+    background-color: green;
+    color: white;
+    font-family: 'Open Sans';
+    font-size: 1.8rem;
+  }
+}
