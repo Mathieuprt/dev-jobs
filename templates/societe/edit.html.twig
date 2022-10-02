@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification société{% endblock %}
+
+{% block body %}
+
+    <section class="banner banner__candidat">
+        <div class="container">
+            <h1 class="heading heading--1 heading--1__white">Modifier ma société</h1>
+        </div>
+    </section>
+
+    <main>
+        <section class="page__content--form">
+            <div class="container">
+                <h2 class="heading heading--h2 screen-reader-text">Page modification de société</h2>
+
+                <p>Remplissez le formulaire ci-contre pour modifier votre société</p>
+
+                <div class="form__candidat">
+                    {{ form_start(societe_form) }}
+                    {{ form_widget(societe_form) }}
+                    <button class="button button--primary">{{ button_label|default('Modifier') }}</button>
+                    {{ form_end(societe_form) }}
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

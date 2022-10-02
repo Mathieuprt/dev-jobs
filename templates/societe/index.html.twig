@@ -25,6 +25,7 @@
 
                 <div class="page__content--grid">
                     {% for societe in societes %}
+
                         <article class="grid__item grid__item--societes">
                             <picture class="grid__item--logo">
                                 <img src="{{asset('/upload/' ~ societe.logo)}}" alt="Logo de l'entreprise"
@@ -33,7 +34,7 @@
                             <div class="grid--item__content">
                                 <h3 class="heading heading--h4">{{ societe.name }}</h3>
                                 <p class="grid--item__content__p">{{ societe.city }}</p>
-                                <p class="grid--item__content__p">{{ societe.website }}</p>
+                                <p class="grid--item__content__p">{{ societe.website | slice(0, 21) }}</p>
                                 <p class="grid--item__content__p">{{ societe.email }}</p>
 
                                 <div class="grid--item__content__button">

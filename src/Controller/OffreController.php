@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/offres", name="offre_")
@@ -30,46 +31,25 @@ class OffreController extends AbstractController
     }
 
     /**
-     * @Route("/ajouter", name="add", methods={"GET", "POST"})
-     */
-    public function add(Request $request, OffresRepository $offresRepository): Response
-    {
-        $offre = new Offres();
-        $offreForm = $this->createForm(OffreType::class, $offre);
-        $offreForm->handleRequest($request);
-
-        if($offreForm->isSubmitted() && $offreForm->isValid())
-        {
-            $offresRepository->add($offre, true);
-
-            return $this->redirectToRoute('offres_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('offre/add.html.twig', [
-            'offre_form' => $offreForm->createView()
-        ]);
-
-    }
-
-
-    /**
      * @Route("/{offre}/modifier", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Offres $offres, Request $request, OffresRepository $offresRepository): Response
+    public function edit(Offres $offre, Request $request, OffresRepository $offresRepository): Response
     {
-        $offreForm = $this->createForm(OffreType::class, $offres);
+        $offreForm = $this->createForm(OffreType::class, $offre);
         $offreForm->handleRequest($request);
 
         if ($offreForm->isSubmitted() && $offreForm->isValid())
         {
-            $offresRepository->add($offres, true);
+            $offresRepository->add($offre, true);
+
+            $this->addFlash('success', 'L\'offre a été modifiée !');
 
             return $this->redirectToRoute('offres_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('offre/edit.html.twig',[
             'offre_form' => $offreForm,
-            'offres' => $offres
+            'offre' => $offre
         ]);
     }
 
@@ -93,7 +73,7 @@ class OffreController extends AbstractController
 
         $this->addFlash('success', 'L\'offre a été supprimé !');
 
-        return $this->redirectToRoute('offres_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
     }
 
 
@@ -102,7 +82,8 @@ class OffreController extends AbstractController
     /**
      * @Route("/{offre}/candidature", name="candidature", methods={"GET", "POST"})
      */
-    public function candidature(Offres $offres, Request $request, CandidatRepository $candidatRepository): Response
+    public function candidature(Offres $offre, Request $request, CandidatRepository $candidatRepository, SluggerInterface $slugger):
+    Response
     {
         $candidat = new Candidat();
         $candidatForm = $this->createForm(CandidatType::class, $candidat);
@@ -110,16 +91,33 @@ class OffreController extends AbstractController
 
         if($candidatForm->isSubmitted() && $candidatForm->isValid())
         {
-            $candidat->setOffre($offres);
+
+            $cv = $candidatForm->get('candidat_cv')->getData();
+            $cvName = pathinfo($cv->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeLogoName = $slugger->slug($cvName);
+            $newCvName = $safeLogoName.'-'.uniqid().'.'.$cv->guessExtension();
+
+            $cv->move(
+                $this->getParameter('files_directory'),
+                $newCvName
+            );
+
+            $candidat
+                ->setOffre($offre)
+                ->setCandidatCv($newCvName)
+                ->setCreatedAt(new \DateTimeImmutable('now'));
 
             $candidatRepository->add($candidat, true);
 
-            return $this->redirectToRoute('offres_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Votre candidature a bien été envoyé !');
+
+            return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
 
         }
 
         return $this->render('candidat/candidature.html.twig', [
-            'candidat_form'=>$candidatForm->createView()
+            'candidat_form'=>$candidatForm->createView(),
+            'candidat' => $candidat
         ]);
     }
 

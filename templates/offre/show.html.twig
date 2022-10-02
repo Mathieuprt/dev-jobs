@@ -60,8 +60,10 @@
                     button--tertiary">Supprimer</a>
                 </div>
                 <div class="societe__buttons">
-                    <a href="#" class="button button--secondary">Modifier</a>
-                    <a href="#" class="button button--primary">Postuler</a>
+                    <a href="{{ path('offre_edit', {'offre': offre.id}) }}" class="button
+                    button--secondary">Modifier</a>
+                    <a href="{{ path('offre_candidature', {'offre': offre.id}) }}" class="button
+                    button--primary">Postuler</a>
                 </div>
             </div>
         </div>

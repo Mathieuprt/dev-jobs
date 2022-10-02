@@ -41,7 +41,8 @@
             </section>
             <div class="societe__buttons">
                 <a href="{{ path('candidat_delete', {'candidat': candidat.id}) }}" class="button button--tertiary">Supprimer</a>
-                <a href="" class="button button--primary">Modifier</a>
+                <a href="{{ path('candidat_edit', {'candidat': candidat.id}) }}" class="button
+                button--primary">Modifier</a>
             </div>
 
         </div>

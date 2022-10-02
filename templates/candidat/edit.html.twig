@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ma candidature{% endblock %}
+{% block title %}Modification{% endblock %}
 
 {% block body %}
 
     <section class="banner banner__candidat">
         <div class="container">
-            <h1 class="heading heading--1 heading--1__white">Ma candidature</h1>
+            <h1 class="heading heading--1 heading--1__white">Modifier une candidature</h1>
         </div>
     </section>
 
@@ -15,12 +15,12 @@
             <div class="container">
                 <h2 class="heading heading--h2 screen-reader-text">Page candidature</h2>
 
-                <p>Remplissez le formulaire ci-contre pour envoyer votre candidature</p>
+                <p>Modifier les informations du candidat</p>
 
                 <div class="form__candidat">
                     {{ form_start(candidat_form) }}
-                        {{ form_widget(candidat_form) }}
-                        <button class="button button--primary">{{ button_label|default('Envoyer') }}</button>
+                    {{ form_widget(candidat_form) }}
+                    <button class="button button--primary">{{ button_label|default('Modifier') }}</button>
                     {{ form_end(candidat_form) }}
                 </div>
             </div>

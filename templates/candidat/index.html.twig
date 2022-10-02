@@ -38,7 +38,8 @@
                                 <p class="grid--item__content__p">{{ candidat.candidatcv}}</p>
 
                                 <div class="grid--item__content__button">
-                                    <a href="" class="button button--primary">Voir le candidat</a>
+                                    <a href="{{ path('candidat_show', {'candidat': candidat.id}) }}" class="button
+                                    button--primary">Voir le candidat</a>
                                 </div>
                             </div>
                         </article>

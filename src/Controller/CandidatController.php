@@ -33,7 +33,7 @@ class CandidatController extends AbstractController
 
     public function edit(Candidat $candidat, Request $request, CandidatRepository $candidatRepository): Response
     {
-        $candidatForm = $this->createForm(CandidatType::class, $candidat);
+        $candidatForm = $this->createForm(CandidatType::class, $candidat, ['etapes' => "edit_profile"]);
         $candidatForm->handleRequest($request);
 
         if($candidatForm->isSubmitted() && $candidatForm->isValid())
@@ -65,7 +65,7 @@ class CandidatController extends AbstractController
 
 
     /**
-     * @Route("/{candidat}", name="_show", methods={"GET", "POST"}, requirements={"candidat": "\d+"})
+     * @Route("/{candidat}", name="show", methods={"GET", "POST"}, requirements={"candidat": "\d+"})
      */
     public function show(Candidat $candidat): Response
     {

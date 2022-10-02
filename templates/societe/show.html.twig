@@ -38,32 +38,38 @@
                 </div>
 
                 <div class="societe__offres">
-                    <h2 class="heading heading--h2">Les offres</h2>
-                    <div class="societe__offres--grid">
-                        {% for offre in societe.offres %}
-
-                            <article class="grid__item grid__item--offres">
-                                <picture class="grid__item--logo">
-                                    <img src="{{asset('/upload/' ~ offre.societe.logo)}}" alt="Logo de l'entreprise"
+                    {% if societe.offres|length > 0 %}
+                        <h2 class="heading heading--h2">Les offres</h2>
+                        <div class="societe__offres--grid">
+                            {% for offre in societe.offres %}
+                                <article class="grid__item grid__item--offres">
+                                    <picture class="grid__item--logo">
+                                        <img src="{{asset('/upload/' ~ offre.societe.logo)}}" alt="Logo de l'entreprise"
                                          style="background-color: {{ offre.societe.backgroundlogo }}">
-                                </picture>
-                                <div class="grid--item__content">
-                                    <h3 class="heading heading--h4">{{ offre.title }}</h3>
-                                    <p class="grid--item__content__p">{{ offre.societe.name }}</p>
-                                    <p class="grid--item__content__p">{{ offre.createdat|date('d-m-Y H:i:s')| slice(0, 10) }}</p>
-                                    <div class="dual_text">
-                                        <p class="grid--item__content__p">{{ offre.contrattype }}</p>
-                                        <p class="grid--item__content__p">{{ offre.societe.city }}</p>
+                                    </picture>
+                                    <div class="grid--item__content">
+                                        <h3 class="heading heading--h4">{{ offre.title }}</h3>
+                                        <p class="grid--item__content__p">{{ offre.societe.name }}</p>
+                                        <p class="grid--item__content__p">{{ offre.createdat|date('d-m-Y H:i:s')| slice(0, 10) }}</p>
+                                        <div class="dual_text">
+                                            <p class="grid--item__content__p">{{ offre.contrattype }}</p>
+                                            <p class="grid--item__content__p">{{ offre.societe.city }}</p>
+                                        </div>
+                                        <div class="grid--item__content__button">
+                                            <a href="{{ path('offre_show', {'offre': offre.id}) }}" class="button
+                                            button--primary">Voir l'annonce</a>
+                                        </div>
                                     </div>
-                                    <div class="grid--item__content__button">
-                                        <a href="{{ path('offre_show', {'offre': offre.id}) }}" class="button
-                                        button--primary">Voir l'annonce</a>
-                                    </div>
-                                </div>
-                            </article>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <h2 class="heading heading--h2">Les offres</h2>
+                        <div class="societe__offres--grid">
+                            <p>Aucune offre pour le moment</p>
+                        </div>
+                    {% endif %}
 
-                        {% endfor %}
-                    </div>
 
 
 
@@ -73,7 +79,10 @@
             <div class="societe__buttons">
                 <a href="{{ path('societe_delete', {'societe': societe.id}) }}" class="button
                 button--tertiary">Supprimer</a>
-                <a href="#" class="button button--secondary">Modifier</a>
+                <a href="{{ path('societe_edit', {'societe': societe.id}) }}" class="button
+                button--secondary">Modifier</a>
+                <a href="{{ path('societe_add-offre', {'societe': societe.id}) }}" class="button
+                button--primary">Publier une annonce</a>
             </div>
         </div>
 

@@ -1,1 +1,30 @@
-<h1>Ajouter</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Poster une offre{% endblock %}
+
+{% block body %}
+
+    <section class="banner banner__offer">
+        <div class="container">
+            <h1 class="heading heading--1 heading--1__white">Poster une offre</h1>
+        </div>
+    </section>
+
+    <main>
+        <section class="page__content--form">
+            <div class="container">
+                <h2 class="heading heading--h2 screen-reader-text">Page création d'une offre d'emploi</h2>
+
+                <p>Remplissez le formulaire ci-contre pour poster votre annonce</p>
+
+                <div class="form__candidat">
+                    {{ form_start(offre_form) }}
+                    {{ form_widget(offre_form) }}
+                    <button class="button button--primary">{{ button_label|default('Poster') }}</button>
+                    {{ form_end(offre_form) }}
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

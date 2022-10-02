@@ -12,10 +12,13 @@
             </button>
             <ul class="menu main-menu" id="main-menu" hidden>
                 <li class="menu-item"><a href="#" class="menu-link">Accueil</a></li>
-                <li class="menu-item"><a href="{{ path('offre_index') }}"
-                                         class="menu-link">Les offres</a></li>
+                <li class="menu-item"><a href="" class="menu-link">Mon espace</a></li>
+                <li class="menu-item"><a href="{{ path('offre_index') }}" class="menu-link">Les offres</a></li>
+                <li class="menu-item"><a href="{{ path('societe_index') }}" class="menu-link">Les sociétés</a></li>
+                <li class="menu-item"><a href="{{ path('candidat_index') }}" class="menu-link">Les candidats</a></li>
                 <li class="menu-item"><a href="#" class="button button--primary">Connexion</a></li>
-                <li class="menu-item"><a href="#" class="button button--secondary">Inscription</a></li>
+                <li class="menu-item"><a href="{{ path('societe_add') }}" class="button
+                button--secondary">Inscription</a></li>
             </ul>
         </nav>
 
