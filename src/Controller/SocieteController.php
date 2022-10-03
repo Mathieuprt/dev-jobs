@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidat;
 use App\Entity\Offres;
 use App\Entity\Societe;
 use App\Form\OffreType;
@@ -121,7 +122,7 @@ class SocieteController extends AbstractController
     {
         return $this->render('societe/show.html.twig', [
             'societe' => $societe,
-            'offre' => $offres
+            'offre' => $offres,
         ]);
     }
 
@@ -172,20 +173,4 @@ class SocieteController extends AbstractController
         ]);
     }*/
 
-
-
-
-    // Les candidats
-
-
-    /**
-     * @Route("/{societe}/candidats", name="candidats", methods={"GET", "POST"})
-     */
-
-    public function societeCandidats(Societe $societe): Response
-    {
-        return $this->render('candidat/societe-candidats.html.twig', [
-            'societe' => $societe
-        ]);
-    }
 }

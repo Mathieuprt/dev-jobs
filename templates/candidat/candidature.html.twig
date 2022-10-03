@@ -11,20 +11,18 @@
     </section>
 
     <main>
-        <section class="page__content--form">
-            <div class="container">
+        <div class="container">
+            <section class="page__content--form">
                 <h2 class="heading heading--h2 screen-reader-text">Page candidature</h2>
-
                 <p>Remplissez le formulaire ci-contre pour envoyer votre candidature</p>
-
                 <div class="form__candidat">
                     {{ form_start(candidat_form) }}
-                        {{ form_widget(candidat_form) }}
-                        <button class="button button--primary">{{ button_label|default('Envoyer') }}</button>
+                    {{ form_widget(candidat_form) }}
+                    <button class="button button--primary">{{ button_label|default('Envoyer') }}</button>
                     {{ form_end(candidat_form) }}
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 
 {% endblock %}

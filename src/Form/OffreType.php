@@ -19,7 +19,7 @@ class OffreType extends AbstractType
                 'required' => true,
                 'label' => 'Intitulé du poste',
                 'attr' => [
-                    'placeholder' => 'Intitulé" du poste'
+                    'placeholder' => 'Intitulé du poste'
                 ]
             ])
             ->add('contrat_type', ChoiceType::class, [
