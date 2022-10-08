@@ -44,11 +44,11 @@ class OffreController extends AbstractController
 
             $this->addFlash('success', 'L\'offre a été modifiée !');
 
-            return $this->redirectToRoute('offres_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('offre/edit.html.twig',[
-            'offre_form' => $offreForm,
+            'offre_form' => $offreForm->createView(),
             'offre' => $offre
         ]);
     }

@@ -3,10 +3,100 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
+    <section class="banner banner__home">
+        <div class="container">
+            <h1 class="heading heading--1 heading--1__white screen-reader-text">Page d'accueil</h1>
+            <div class="home__intro">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+
+            <div class="home__bandeau">
+                <p>Dev Jobs, votre gestionnaire d'offres d'emploi, de candidatures ..</p>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section class="actus__offres">
+            <div class="container">
+                <h2 class="heading heading--h2">Nos dernières offres</h2>
+
+                <div class="actus__offres--list">
+
+                    {% for offre in offres|slice(0, 3) %}
+                        <article class="grid__item grid__item--offres">
+                            <picture class="grid__item--logo">
+                                <img src="{{asset('/upload/' ~ offre.societe.logo)}}" alt="Logo de l'entreprise"
+                                     style="background-color: {{ offre.societe.backgroundlogo }}">
+                            </picture>
+                            <div class="grid--item__content">
+                                <h3 class="heading heading--h4">{{ offre.title }}</h3>
+                                <p class="grid--item__content__p">{{ offre.societe.name }}</p>
+                                <p class="grid--item__content__p">{{ offre.createdat|date('d-m-Y H:i:s')| slice(0, 10) }}</p>
+                                <div class="dual_text">
+                                    <p class="grid--item__content__p">{{ offre.contrattype }}</p>
+                                    <p class="grid--item__content__p">{{ offre.societe.city }}</p>
+                                </div>
+                                <div class="grid--item__content__button">
+                                    <a href="{{ path('offre_show', {'offre': offre.id}) }}" class="button
+                                    button--primary">Voir l'annonce</a>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+                <div class="see__more">
+                    <a href="{{ path('offre_index') }}" class="see__more--button">Voir les autres offres</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="devjobs__infos">
+            <div class="container">
+                <div class="devjobs__infos--text">
+                    <h3 class="heading heading--h3 heading--h3__white">Titre de la section</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                    <div class="infos__text--buttons">
+                        <a href="{{ path('societe_add') }}" class="button button--primary">S'inscrire</a>
+                        <a href="#" class="button button--secondary">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <picture class="devjobs__infos--img">
+                <img src="{{ asset('build/images/home-section.jpg') }}" alt="Deux femmes discutant">
+            </picture>
+        </section>
+
+        <section class="section__devjobs--slide">
+            <div class="container">
+                <h2 class="heading heading--h2">Nos témoignages</h2>
+                <div class="slide__section splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+
+                           <!-- <li class="splide__slide testimonial__item">
+                                <p class="testimonial__quote">We have been using product for last one year, and I have to say that it has transformed the way we do business. Communication with team and support is brilliant. Thank you for awesome service.</p>
+                                <div class="testimonial__client">
+                                    <div class="testimonial__infos">
+                                        <p class="testimonial__infos--name">Sarah Parker</p>
+                                        <p class="testimonial__infos--city">Paris</p>
+                                    </div>
+
+                                    <picture class="testimonial__img">
+                                        <img src="" alt="Photo de profil">
+                                    </picture>
+                                </div>
+                            </li> -->
 
 
-<div class="example-wrapper">
-    <h1>Hey it works nice</h1>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
 
 </div>

@@ -75,7 +75,17 @@ class SocieteController extends AbstractController
             'societe' => $societe
         ]);
     }
+    /**
+     * @Route("/{societe}", name="show", methods={"GET"}, requirements={"id":"\d+"})
+     */
 
+    public function show(Societe $societe, Offres $offres): Response
+    {
+        return $this->render('societe/show.html.twig', [
+            'societe' => $societe,
+            'offres' => $offres,
+        ]);
+    }
 
     /**
      * @Route("/{societe}/modifier", name="edit", methods={"GET", "POST"})
@@ -84,20 +94,19 @@ class SocieteController extends AbstractController
     public function edit(Societe $societe, Request $request, SocieteRepository $societeRepository): Response
     {
         $societeForm = $this->createForm(SocieteType::class, $societe, ['etapes' => 'edit_profil']);
-
         $societeForm->handleRequest($request);
 
         if ($societeForm->isSubmitted() && $societeForm->isValid()) {
             $societeRepository->add($societe, true);
 
-            $this->addFlash('success', 'Modifications réussi !');
+            $this->addFlash('success', 'Modifications réussies !');
 
-            return $this->redirectToRoute('societe_show', ['id' => $societe->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('societe/edit.html.twig', [
-            'societe_form' => $societeForm,
-            'societe' => $societe
+            'societe_form' => $societeForm->createView(),
+            'societe' => $societe,
         ]);
     }
 
@@ -114,17 +123,7 @@ class SocieteController extends AbstractController
         return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    /**
-     * @Route("/{societe}", name="show", methods={"GET", "POST"})
-     */
 
-    public function show(Societe $societe, Offres $offres): Response
-    {
-        return $this->render('societe/show.html.twig', [
-            'societe' => $societe,
-            'offre' => $offres,
-        ]);
-    }
 
 
 

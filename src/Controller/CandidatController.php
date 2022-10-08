@@ -40,13 +40,13 @@ class CandidatController extends AbstractController
         {
             $candidatRepository->add($candidat, true);
 
-            // add flash
+            $this->addFlash('success', 'L\'offre a été modifiée !');
 
             return $this->redirectToRoute('candidat_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('candidat/edit.html.twig', [
-            'candidat_form' => $candidatForm,
+            'candidat_form' => $candidatForm->createView(),
             'candidat' => $candidat
         ]);
     }

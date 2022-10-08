@@ -18,7 +18,7 @@ class SocieteType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        switch ($options['etapes']){
+        switch ($options["etapes"]){
             case 'edit_profil':
                 $this->editLogo($builder);
                 $this->editProfil($builder);
