@@ -31,4 +31,8 @@
     background-image: url('/public/build/images/candidat-banner.jpg');
 
   }
+
+  &.banner__home{
+    background-image: url("/public/build/images/home-banner.jpg");
+  }
 }

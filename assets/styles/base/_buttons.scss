@@ -124,3 +124,23 @@
     }
   }
 }
+
+.see__more{
+  margin-top: 5rem;
+
+  display: flex;
+  justify-content: center;
+
+  @include mediaquery($medium){
+    justify-content: flex-end;
+  }
+
+  a{
+    text-decoration: underline;
+    font-size: 1.8rem;
+    cursor: pointer;
+    @include mediaquery($medium){
+      font-size: 2rem;
+    }
+  }
+}

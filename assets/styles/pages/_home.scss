@@ -1,0 +1,138 @@
+.banner.banner__home{
+  padding: 0;
+  height: calc(100vh - 90px);
+  position: relative;
+  &::before{
+    content: '';
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0,0,0, 0.6);
+  }
+
+  .container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+
+    @include mediaquery($xsmall){
+      justify-content: flex-start;
+    }
+  }
+
+  .home__intro{
+    padding: 1.8rem;
+    position: relative;
+
+    border: 1px solid var(--white);
+    border-radius: 4px;
+    width: 100%;
+    max-width: 55rem;
+
+    p{
+      color: var(--white);
+    }
+  }
+
+  .home__bandeau{
+    display: none;
+
+    @include mediaquery($medium){
+      display: flex;
+
+      position: absolute;
+      top: 7%;
+      right: 0;
+
+      background-color: rgba(0,0,0, 0.7);
+      padding: 1.6rem 20rem 1.6rem 2.5rem;
+
+      border-radius: 50px 0 0 50px;
+
+      p{
+        color: var(--white);
+        font-size: 1.6rem;
+        font-weight: 400;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+
+.actus__offres{
+  margin-top: 8rem;
+
+  @include mediaquery($medium){
+    margin-top: 11rem;
+  }
+
+  h2{
+    text-align: center;
+  }
+
+  &--list{
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 3rem;
+
+    @include mediaquery($small){
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 4.5rem;
+      column-gap: 3rem;
+
+      margin-top: 8rem;
+    }
+
+    @include mediaquery($large){
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.devjobs__infos{
+  @include mediaquery($large){
+    margin: 11rem 0;
+
+    display: flex;
+    align-items: center;
+  }
+  &--text{
+    position: relative;
+    background-color: var(--gray);
+
+    padding: 4.5rem 2rem;
+    border-radius: 4px;
+    top: 8rem;
+
+    @include mediaquery($large){
+      top: 0;
+      left: 10%;
+    }
+
+    h3{
+      display: inline;
+    }
+    p{
+      margin: 2rem 0;
+    }
+    .infos__text--buttons{
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+  }
+
+  &--img{
+    width: 100%;
+  }
+}

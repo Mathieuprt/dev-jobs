@@ -93,6 +93,11 @@ p, span{
     @include mediaquery($medium){
       font-size: 3rem;
     }
+
+    &__white{
+      color: var(--white);
+      background-color: var(--blue);
+    }
   }
 
   &.heading--h4{
