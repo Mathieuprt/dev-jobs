@@ -55,13 +55,17 @@
             </section>
 
             <div class="societe__buttons--offre">
+                {% if (is_granted("ROLE_ADMIN") or app.user and app.user.id == offre.societe.id ) %}
                 <div class="delete_button">
-                    <a href="{{ path('offre_delete', {'offres': offre.id}) }}" class="button
+                    <a href="{{ path('offre_delete', {'offre': offre.id}) }}" class="button
                     button--tertiary">Supprimer</a>
                 </div>
+                {% endif %}
                 <div class="societe__buttons">
+                    {% if (is_granted("ROLE_ADMIN") or app.user and app.user.id == offre.societe.id ) %}
                     <a href="{{ path('offre_edit', {'offre': offre.id}) }}" class="button
                     button--secondary">Modifier</a>
+                    {% endif %}
                     <a href="{{ path('offre_candidature', {'offre': offre.id}) }}" class="button
                     button--primary">Postuler</a>
                 </div>

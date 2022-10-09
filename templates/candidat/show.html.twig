@@ -36,14 +36,16 @@
                 </div>
                 <div class="candidat__infos">
                     <span>Pièce jointe</span>
-                    <p>{{ candidat.candidatcv}}</p>
+                    <a download="" href="{{asset('/upload/' ~ candidat.candidatcv)}}">{{ candidat.candidatcv}}</a>
                 </div>
             </section>
+            {% if (is_granted("ROLE_ADMIN") or app.user and app.user.id == candidat.offre.societe.id ) %}
             <div class="societe__buttons">
                 <a href="{{ path('candidat_delete', {'candidat': candidat.id}) }}" class="button button--tertiary">Supprimer</a>
                 <a href="{{ path('candidat_edit', {'candidat': candidat.id}) }}" class="button
                 button--primary">Modifier</a>
             </div>
+            {% endif %}
 
         </div>
 
