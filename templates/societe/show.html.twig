@@ -39,7 +39,7 @@
 
                 <div class="societe__offres">
                     {% if societe.offres|length > 0 %}
-                        <h2 class="heading heading--h2">Les offres</h2>
+                        <h2 class="heading heading--h2">Mes offres</h2>
                         <div class="societe__offres--grid">
                             {% for offre in societe.offres %}
                                 <article class="grid__item grid__item--offres">
@@ -70,9 +70,42 @@
                         </div>
                     {% endif %}
                 </div>
+            </section>
+
+            <section class="societe__candidats">
+                    <table class="societe__candidats--table">
+                        <thead>
+                            <tr>
+                                <th>Nom et prénom</th>
+                                <th>Mail</th>
+                                <th>CV</th>
+                                <th>Offre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for offre in societe.offres %}
+                        {% for candidat in offre.candidat %}
+                            {% if offre.candidat|length > 0 %}
+                            <tr>
+                                <td><a href="{{ path('candidat_show', {'candidat': candidat.id}) }}">{{ candidat
+                                        .firstname }} {{ candidat.lastname }}</a></td>
+                                <td>{{ candidat.email }}</td>
+                                <td><a download href="{{asset('/upload/' ~ candidat.candidatcv)}}">{{ candidat.candidatcv}}</a></td>
+                                <td><a href="{{ path('offre_show', {'offre': offre.id}) }}">{{ candidat.offre
+                                        .title }}</a></td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td>Aucun candidat(e) pour l'instant</td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
 
             </section>
-            
+            {% if (is_granted("ROLE_ADMIN") or app.user and app.user.id == societe.id ) %}
             <div class="societe__buttons">
                 <a href="{{ path('societe_delete', {'societe': societe.id}) }}" class="button
                 button--tertiary">Supprimer</a>
@@ -81,6 +114,7 @@
                 <a href="{{ path('societe_add-offre', {'societe': societe.id}) }}" class="button
                 button--primary">Publier une annonce</a>
             </div>
+            {% endif %}
         </div>
 
     </main>
