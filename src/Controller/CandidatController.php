@@ -21,10 +21,17 @@ class CandidatController extends AbstractController
      */
     public function index(CandidatRepository $candidatRepository): Response
     {
-        return $this->render('candidat/index.html.twig', [
-            'controller_name' => 'CandidatController',
-            'candidats' => $candidatRepository->findAll()
-        ]);
+        if ($this->isGranted('ROLE_ADMIN')){
+
+            return $this->render('candidat/index.html.twig', [
+                'controller_name' => 'CandidatController',
+                'candidats' => $candidatRepository->findAll()
+            ]);
+        }
+        else {
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        }
+
     }
 
     /**
@@ -33,22 +40,29 @@ class CandidatController extends AbstractController
 
     public function edit(Candidat $candidat, Request $request, CandidatRepository $candidatRepository): Response
     {
-        $candidatForm = $this->createForm(CandidatType::class, $candidat, ['etapes' => "edit_profile"]);
-        $candidatForm->handleRequest($request);
+        if ($this->getUser()->getId() === $candidat->getOffre()->getSociete()->getId() || $this->isGranted('ROLE_ADMIN')){
 
-        if($candidatForm->isSubmitted() && $candidatForm->isValid())
-        {
-            $candidatRepository->add($candidat, true);
+            $candidatForm = $this->createForm(CandidatType::class, $candidat, ['etapes' => "edit_profile"]);
+            $candidatForm->handleRequest($request);
 
-            $this->addFlash('success', 'L\'offre a été modifiée !');
+            if($candidatForm->isSubmitted() && $candidatForm->isValid())
+            {
+                $candidatRepository->add($candidat, true);
 
-            return $this->redirectToRoute('candidat_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'Le candidat a été modifié !');
+
+                return $this->redirectToRoute('candidat_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('candidat/edit.html.twig', [
+                'candidat_form' => $candidatForm->createView(),
+                'candidat' => $candidat
+            ]);
+        }
+        else {
+            throw $this->createAccessDeniedException();
         }
 
-        return $this->render('candidat/edit.html.twig', [
-            'candidat_form' => $candidatForm->createView(),
-            'candidat' => $candidat
-        ]);
     }
 
     /**
@@ -56,11 +70,17 @@ class CandidatController extends AbstractController
      */
     public function delete(Candidat $candidat, CandidatRepository $candidatRepository): Response
     {
-        $candidatRepository->remove($candidat, true);
+        if ($this->getUser()->getId() === $candidat->getOffre()->getSociete()->getId() || $this->isGranted('ROLE_ADMIN')){
+            $candidatRepository->remove($candidat, true);
 
-        $this->addFlash('success', 'Le candidat a été supprimé !');
+            $this->addFlash('success', 'Le candidat a été supprimé !');
 
-        return $this->redirectToRoute('candidat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('candidat_index', [], Response::HTTP_SEE_OTHER);
+        }
+        else {
+            throw $this->createAccessDeniedException();
+        }
+
     }
 
 
@@ -69,9 +89,15 @@ class CandidatController extends AbstractController
      */
     public function show(Candidat $candidat): Response
     {
-        return $this->render('candidat/show.html.twig', [
-            'candidat' => $candidat
-        ]);
+        if ($this->getUser()->getId() === $candidat->getOffre()->getSociete()->getId() || $this->isGranted('ROLE_ADMIN')){
+            return $this->render('candidat/show.html.twig', [
+                'candidat' => $candidat
+            ]);
+        }
+        else{
+            throw $this->createAccessDeniedException();
+        }
+
     }
 
 }

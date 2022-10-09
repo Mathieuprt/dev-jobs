@@ -27,10 +27,18 @@ class SocieteController extends AbstractController
      */
     public function index(SocieteRepository $societeRepository): Response
     {
-        return $this->render('societe/index.html.twig', [
-            'controller_name' => 'SocieteController',
-            'societes' => $societeRepository->findAll()
-        ]);
+        if ($this->isGranted('ROLE_ADMIN')){
+
+            return $this->render('societe/index.html.twig', [
+                'controller_name' => 'SocieteController',
+                'societes' => $societeRepository->findAll()
+            ]);
+
+        }
+        else {
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        }
+
     }
 
 
@@ -75,16 +83,24 @@ class SocieteController extends AbstractController
             'societe' => $societe
         ]);
     }
+
     /**
      * @Route("/{societe}", name="show", methods={"GET"}, requirements={"id":"\d+"})
      */
 
-    public function show(Societe $societe, Offres $offres): Response
+    public function show(Societe $societe): Response
     {
-        return $this->render('societe/show.html.twig', [
-            'societe' => $societe,
-            'offres' => $offres,
-        ]);
+        if ($this->getUser()->getId() === $societe->getId() || $this->isGranted('ROLE_ADMIN')){
+
+            return $this->render('societe/show.html.twig', [
+                'societe' => $societe,
+
+            ]);
+
+        }
+        else{
+            throw $this->createAccessDeniedException();
+        }
     }
 
     /**
@@ -93,21 +109,28 @@ class SocieteController extends AbstractController
 
     public function edit(Societe $societe, Request $request, SocieteRepository $societeRepository): Response
     {
-        $societeForm = $this->createForm(SocieteType::class, $societe, ['etapes' => 'edit_profil']);
-        $societeForm->handleRequest($request);
+        if ($this->getUser()->getId() === $societe->getId() || $this->isGranted('ROLE_ADMIN'))
+        {
+            $societeForm = $this->createForm(SocieteType::class, $societe, ['etapes' => 'edit_profil']);
+            $societeForm->handleRequest($request);
 
-        if ($societeForm->isSubmitted() && $societeForm->isValid()) {
-            $societeRepository->add($societe, true);
+            if ($societeForm->isSubmitted() && $societeForm->isValid()) {
+                $societeRepository->add($societe, true);
 
-            $this->addFlash('success', 'Modifications réussies !');
+                $this->addFlash('success', 'Modifications réussies !');
 
-            return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('societe/edit.html.twig', [
+                'societe_form' => $societeForm->createView(),
+                'societe' => $societe,
+            ]);
+        }
+        else {
+            throw $this->createAccessDeniedException();
         }
 
-        return $this->render('societe/edit.html.twig', [
-            'societe_form' => $societeForm->createView(),
-            'societe' => $societe,
-        ]);
     }
 
     /**
@@ -116,60 +139,55 @@ class SocieteController extends AbstractController
 
     public function delete(Societe $societe, SocieteRepository $societeRepository): Response
     {
-        $societeRepository->remove($societe, true);
+        if ($this->getUser()->getId() === $societe->getId() || $this->isGranted('ROLE_ADMIN')){
+            $societeRepository->remove($societe, true);
 
-        $this->addFlash('success', 'La société a été supprimé !');
+            $this->addFlash('success', 'La société a été supprimé !');
 
-        return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
+        }
+        else{
+            throw $this->createAccessDeniedException();
+        }
+
     }
 
-
-
-
-
     // Ajouter une offre
-
 
     /**
      * @Route("/{societe}/creer-offre", name="add-offre", methods={"GET", "POST"})
      */
     public function addOffre(Request $request, OffresRepository $offresRepository, Societe $societe): Response
     {
-        $offre = new Offres();
-        $offreForm = $this->createForm(OffreType::class, $offre);
-        $offreForm->handleRequest($request);
+        if ($this->getUser()->getId() === $societe->getId() || $this->isGranted('ROLE_ADMIN')){
 
-        if($offreForm->isSubmitted() && $offreForm->isValid())
-        {
+            $offre = new Offres();
+            $offreForm = $this->createForm(OffreType::class, $offre);
+            $offreForm->handleRequest($request);
 
-            $offre
-                ->setSociete($societe)
-                ->setCreatedAt(new \DateTimeImmutable('now'));
-            $offresRepository->add($offre, true);
+            if($offreForm->isSubmitted() && $offreForm->isValid())
+            {
 
-            $this->addFlash('success', 'Votre annonce a bien été publiée !');
+                $offre
+                    ->setSociete($societe)
+                    ->setCreatedAt(new \DateTimeImmutable('now'));
+                $offresRepository->add($offre, true);
 
-            return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'Votre annonce a bien été publiée !');
+
+                return $this->redirectToRoute('societe_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('offre/add.html.twig', [
+                'offre_form' => $offreForm->createView(),
+                'societe' => $societe,
+                'offre' => $offre,
+            ]);
+        }
+        else {
+            throw $this->createAccessDeniedException();
         }
 
-        return $this->render('offre/add.html.twig', [
-            'offre_form' => $offreForm->createView(),
-            'societe' => $societe,
-            'offre' => $offre,
-        ]);
-
     }
-
-
-    /**
-     * @Route("/{societe}/offre", name="offres", methods={"GET", "POST"})
-     */
-
-    /*public function societeOffres(Societe $societe): Response
-    {
-        return $this->render('offre/societe-offres.html.twig', [
-            'societe' => $societe
-        ]);
-    }*/
 
 }

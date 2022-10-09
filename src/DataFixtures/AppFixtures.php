@@ -124,7 +124,7 @@ class AppFixtures extends Fixture
 
             $candidats = [];
 
-            for ($c = 0; $c < 30; $c++){
+            for ($c = 0; $c < 80; $c++){
                 $candidat = new Candidat();
 
                 $candidat

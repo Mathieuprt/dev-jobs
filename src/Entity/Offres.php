@@ -6,9 +6,38 @@ use App\Repository\OffresRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
-
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read:offres"}},
+ *     collectionOperations={
+ *          "get_all"={
+ *              "method":"GET",
+ *              "path":"/offres"
+ *          },
+ *          "name_search"={
+ *              "method":"GET",
+ *              "path":"/offres/search"
+ *          }
+ *     },
+ *     itemOperations={
+ *          "get_offre"={
+ *              "method":"GET",
+ *              "path":"/offre/{id}"
+ *          }
+ *     }
+ * )
+ *
+ * @ApiFilter(
+ *     SearchFilter::class, properties={
+ *          "title"="partial",
+ *          "type_contrat"="exact"
+ *     }
+ * )
  * @ORM\Entity(repositoryClass=OffresRepository::class)
  */
 class Offres
@@ -17,51 +46,61 @@ class Offres
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups ({"read:offres"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups ({"read:offres"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups ({"read:offres"})
      */
     private $contrat_type;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups ({"read:offres"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups ({"read:offres"})
      */
     private $profil_desc;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups ({"read:offres"})
      */
     private $profil_comp;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups ({"read:offres"})
      */
     private $poste_desc;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups ({"read:offres"})
      */
     private $poste_mission;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups ({"read:offres"})
      */
     private $website;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups ({"read:offres"})
      */
     private $created_at;
 

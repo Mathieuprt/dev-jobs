@@ -35,22 +35,28 @@ class OffreController extends AbstractController
      */
     public function edit(Offres $offre, Request $request, OffresRepository $offresRepository): Response
     {
-        $offreForm = $this->createForm(OffreType::class, $offre);
-        $offreForm->handleRequest($request);
+        if ($this->getUser()->getId() === $offre->getSociete()->getId() || $this->isGranted('ROLE_ADMIN')){
 
-        if ($offreForm->isSubmitted() && $offreForm->isValid())
-        {
-            $offresRepository->add($offre, true);
+            $offreForm = $this->createForm(OffreType::class, $offre);
+            $offreForm->handleRequest($request);
 
-            $this->addFlash('success', 'L\'offre a été modifiée !');
+            if ($offreForm->isSubmitted() && $offreForm->isValid())
+            {
+                $offresRepository->add($offre, true);
 
-            return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
+                $this->addFlash('success', 'L\'offre a été modifiée !');
+
+                return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('offre/edit.html.twig',[
+                'offre_form' => $offreForm->createView(),
+                'offre' => $offre
+            ]);
         }
-
-        return $this->render('offre/edit.html.twig',[
-            'offre_form' => $offreForm->createView(),
-            'offre' => $offre
-        ]);
+        else {
+            throw $this->createAccessDeniedException();
+        }
     }
 
     /**
@@ -64,16 +70,23 @@ class OffreController extends AbstractController
     }
 
     /**
-     * @Route("/{offres}/suppression", name="delete", methods={"GET", "POST"})
+     * @Route("/{offre}/suppression", name="delete", methods={"GET", "POST"})
      */
 
-    public function delete(Offres $offres, OffresRepository $offresRepository): Response
+    public function delete(Offres $offre, OffresRepository $offresRepository): Response
     {
-        $offresRepository->remove($offres, true);
+        if ($this->getUser()->getId() === $offre->getSociete()->getId() || $this->isGranted('ROLE_ADMIN')){
 
-        $this->addFlash('success', 'L\'offre a été supprimé !');
+            $offresRepository->remove($offre, true);
 
-        return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'L\'offre a été supprimé !');
+
+            return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
+        }
+        else {
+            throw $this->createAccessDeniedException();
+        }
+
     }
 
 
@@ -121,14 +134,4 @@ class OffreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{offre}/{candidat}", name="candidat_show", methods={"GET", "POST"})
-     */
-    /*public function showCandidat(Candidat $candidat, Offres $offre): Response
-    {
-        return $this->render('candidat/show.html.twig', [
-            'offre' => $offre,
-            'candidat' => $candidat
-        ]);
-    }*/
 }
