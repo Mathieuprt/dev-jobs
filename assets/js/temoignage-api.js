@@ -11,7 +11,7 @@ async function getTestimonials(){
     let datas = await response.json();
 
 
-    datas.forEach((data) => {
+    datas.forEach( (data) => {
         // Gestion de l'image
         const testimonyImg = document.createElement('img')
         testimonyImg.src = data.avatar
@@ -49,8 +49,8 @@ async function getTestimonials(){
         quote.className = 'testimonial__quote'
         quote.textContent = data.message
 
-        const item = document.createElement('li')
-        item.className = 'splide__slide testimonial__item'
+        const item = document.querySelector('.testimonial__item.splide__slide')
+
 
         item.appendChild(quote)
         item.appendChild(zoneClient)

@@ -10,9 +10,7 @@ import './styles/app.scss';
 
 // import JS
 import './js/vendor/splide';
-import './js/slide';
 import './js/temoignage-api';
-import './js/menu';
 import './js/script';
 
 

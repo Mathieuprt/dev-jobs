@@ -83,5 +83,23 @@
         }
       }
     }
+
+    &.login{
+      h2{
+        margin-bottom: 4rem;
+      }
+
+      .login__button{
+        margin-top: 4rem;
+
+        display: flex;
+        justify-content: center;
+        width: fit-content;
+
+        @include mediaquery($medium){
+          justify-content: flex-end;
+        }
+      }
+    }
   }
 }
